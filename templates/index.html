@@ -1,5 +1,11 @@
 <h1>今日のタスク</h1>
 
+<form action="/add" method="post">
+    <label for="task">タスク名:</label>
+    <input type="text" id="task" name="task" placeholder="追加したいタスクを入力" />
+    <button type="submit">追加</button>
+</form>
+
 <ul>
 {% for task in tasks %}
     <li>{{ task }}</li>
