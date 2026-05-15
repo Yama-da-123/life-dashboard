@@ -1,15 +1,13 @@
 from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
+import json
 
 app = FastAPI()
 
 templates = Jinja2Templates(directory="templates")
 
-tasks = [
-            "Python勉強",
-            "ガンプラ",
-            "買い物"
-        ]
+with open("tasks.json", "r", encoding="utf-8") as f:
+    tasks = json.load(f)
 
 @app.get("/tasks")
 def task_page(request: Request):
@@ -22,6 +20,9 @@ def task_page(request: Request):
 @app.post("/add")
 def add_task(request: Request, task: str = Form()):
     tasks.append(task)
+
+    with open("tasks.json", "w", encoding="utf-8") as f:
+        json.dump(tasks, f, ensure_ascii=False, indent=2)
 
     return templates.TemplateResponse(
         request = request,
