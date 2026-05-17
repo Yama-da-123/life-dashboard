@@ -8,6 +8,12 @@
 
 <ul>
 {% for task in tasks %}
-    <li>{{ task }}</li>
+    <li>
+        {{ task }}
+        <form action="/delete" method="post">
+            <input type="hidden" name="task" value="{{ task }}">
+            <button type="submit">削除</button>
+        </form>    
+    </li>
 {% endfor %}
 </ul>

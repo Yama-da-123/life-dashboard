@@ -29,4 +29,17 @@ def add_task(request: Request, task: str = Form()):
         name="index.html",
         context={"tasks": tasks}
     )
+
+@app.post("/delete")
+def delete_task(request: Request, task: str = Form()):
+    tasks.remove(task)
+
+    with open("tasks.json", "w", encoding="utf-8") as f:
+        json.dump(tasks, f, ensure_ascii=False, indent=2)
+    
+    return templates.TemplateResponse(
+        request = request,
+        name="index.html",
+        context={"tasks": tasks}
+    )
         
