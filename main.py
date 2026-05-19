@@ -1,8 +1,12 @@
 from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
 import json
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
 
@@ -18,28 +22,36 @@ def task_page(request: Request):
     )
 
 @app.post("/add")
-def add_task(request: Request, task: str = Form()):
-    tasks.append(task)
+def add_task(request: Request, task: str = Form(), priority: str = Form()):
+    tasks.append(
+        {
+            "title": task,
+            "priority": priority
+        }
+    )
 
     with open("tasks.json", "w", encoding="utf-8") as f:
         json.dump(tasks, f, ensure_ascii=False, indent=2)
 
-    return templates.TemplateResponse(
-        request = request,
-        name="index.html",
-        context={"tasks": tasks}
+    return RedirectResponse(
+        url="/tasks",
+        status_code=303
     )
 
 @app.post("/delete")
-def delete_task(request: Request, task: str = Form()):
-    tasks.remove(task)
+def delete_task(request: Request, task: str = Form(), priority: str = Form()):
+    tasks.remove(
+        {
+            "title": task,
+            "priority": priority
+        }
+    )
 
     with open("tasks.json", "w", encoding="utf-8") as f:
         json.dump(tasks, f, ensure_ascii=False, indent=2)
     
-    return templates.TemplateResponse(
-        request = request,
-        name="index.html",
-        context={"tasks": tasks}
+    return RedirectResponse(
+        url="/tasks",
+        status_code=303
     )
         

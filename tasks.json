@@ -1,6 +1,18 @@
 [
-  "Python勉強",
-  "ガンプラ",
-  "買い物",
-  "アジャイル開発"
+  {
+    "title": "ガンプラ",
+    "priority": "高"
+  },
+  {
+    "title": "python勉強",
+    "priority": "中"
+  },
+  {
+    "title": "test",
+    "priority": "高"
+  },
+  {
+    "title": "test2",
+    "priority": "低"
+  }
 ]
