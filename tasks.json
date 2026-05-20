@@ -14,5 +14,9 @@
   {
     "title": "test2",
     "priority": "低"
+  },
+  {
+    "title": "delete用",
+    "priority": "低"
   }
 ]
